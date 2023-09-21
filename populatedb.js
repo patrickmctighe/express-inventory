@@ -114,6 +114,7 @@ async function typeCreate(index, type_name, type_description, type_image) {
   typedetail = {
     type_name: type_name,
     type_description: type_description,
+    type_image: type_image,
   };
   const type = new Type(typedetail);
   await type.save();
@@ -228,7 +229,7 @@ async function createGuns() {
       335000,
       specs[8],
       makers[4],
-      "https://static.wikia.nocookie.net/armoredcore/images/9/98/39_-_IB-C03W1_WLT_011.png/revision/latest/scale-to-width-down/250?cb=20230908222500",
+      "https://static.wikia.nocookie.net/armoredcore/images/9/98/39_-_IB-C03W1_WLT_011.png",
       10,
       0
     ),
@@ -242,19 +243,19 @@ async function createMakers() {
       0,
       "ALLMIND",
       "ALLMIND (オールマインド) is a mercenary liaison organization and weapons manufacturer",
-      "./public/images/makers/ALLMIND.png"
+      "https://static.wikia.nocookie.net/armoredcore/images/b/bb/Allmind_Emblem.PNG"
     ),
     makerCreate(
       1,
       "Arquebus Corporation",
       "Arquebus Corporation (アーキバス・コーポレーション) is a manufacturer of Armored Core parts in ARMORED CORE VI FIRES OF RUBICON. Among their assets include an elite mercenary squadron, codenamed Vespers and their subsidiary, Schneider, which also manufactures AC parts and schematics. They are a major faction in the planet Rubicon 3.",
-      "https://static.wikia.nocookie.net/armoredcore/images/7/73/Emblem_ACVI_Arquebus_Corporation.png/revision/latest/scale-to-width-down/180?cb=20230907114022"
+      "https://static.wikia.nocookie.net/armoredcore/images/7/73/Emblem_ACVI_Arquebus_Corporation.png"
     ),
     makerCreate(
       2,
       "Balams Industries",
       "Balam Industries is a manufacturer of Armored Core parts in ARMORED CORE VI FIRES OF RUBICON. Their motto is, 'Domination through material superiority.' They are one of the major corporations on Rubicon 3, with their power enforced by their in-house mercenary company the Redguns.",
-      "https://static.wikia.nocookie.net/armoredcore/images/7/74/Emblem_ACVI_Balam_Industries.png/revision/latest/scale-to-width-down/180?cb=20230907113947"
+      "https://static.wikia.nocookie.net/armoredcore/images/7/74/Emblem_ACVI_Balam_Industries.png"
     ),
     makerCreate(
       3,
@@ -266,7 +267,7 @@ async function createMakers() {
       4,
       "Rubicon Research Institute",
       "The Rubicon Research Institute is an organization in ARMORED CORE VI FIRES OF RUBICON. They were manufacturers of highly advanced technology powered by Rubicon 3's Coral. It became defunct 50 years before the game, when the Fires of Ibis devastated Rubicon. They also created the C-Weapons and the Ibis Series, powerful unmanned machines and Armored Cores that weaponized Coral to deadly results. Other than their Coral-based technology, the RRI also manufactured Light Wave weaponry, which combined laser and pulse technology to fire energy projectiles.",
-      "https://static.wikia.nocookie.net/armoredcore/images/3/3f/Emblem_ACVI_Rubicon_Research_Institute.png/revision/latest/scale-to-width-down/180?cb=20230907121037"
+      "https://static.wikia.nocookie.net/armoredcore/images/3/3f/Emblem_ACVI_Rubicon_Research_Institute.png"
     ),
   ]);
 }
@@ -277,17 +278,20 @@ async function createTypes() {
     typeCreate(
       0,
       "Kinetic",
-      "Kinetic Weapons can be thought of as “traditional weapons” that use bullets like those of the real world. A more common name might be Ballistic Weapons. They fire non-explosive rounds that deal damage via high-velocity impacts."
+      "Kinetic Weapons can be thought of as “traditional weapons” that use bullets like those of the real world. A more common name might be Ballistic Weapons. They fire non-explosive rounds that deal damage via high-velocity impacts.",
+      "https://cdnb.artstation.com/p/assets/images/images/011/501/933/large/gregory-trusov-2.jpg?1529923940"
     ),
     typeCreate(
       1,
       "Energy",
-      "Energy type ammunition is a slightly more powerful, more convenient type of ammunition that discharges energy in the form of concentrated blasts of energy or lasers whose intense heat can easily tear through enemies. Although each weapon has a preset reserve of finite power, it takes energy from the AC in order to operate at full power. Because energy weapons do not utilize rounds or magazines, there is no need to pay for refills, as they recharge after a battle, thus making them cost-efficient, although they're relatively costly to purchase. "
+      "Energy type ammunition is a slightly more powerful, more convenient type of ammunition that discharges energy in the form of concentrated blasts of energy or lasers whose intense heat can easily tear through enemies. Although each weapon has a preset reserve of finite power, it takes energy from the AC in order to operate at full power. Because energy weapons do not utilize rounds or magazines, there is no need to pay for refills, as they recharge after a battle, thus making them cost-efficient, although they're relatively costly to purchase. ",
+      "https://i.pinimg.com/originals/fd/e6/6e/fde66edf9d941c080f29d933534a72a5.jpg"
     ),
     typeCreate(
       2,
       "Explosive",
-      "In direct comparison, Explosive Weapons deal the most damage, therefore it is best to use them in boss battles or tough situations. Not only that, but they have a high recoil which means moving and shooting will probably cause less accuracy and increase your chances of missing the target. So it is best to use them while you are stationary."
+      "In direct comparison, Explosive Weapons deal the most damage, therefore it is best to use them in boss battles or tough situations. Not only that, but they have a high recoil which means moving and shooting will probably cause less accuracy and increase your chances of missing the target. So it is best to use them while you are stationary.",
+      "https://www.renderhub.com/sathak/sci-fi-missiles/sci-fi-missiles.jpg"
     ),
   ]);
 }

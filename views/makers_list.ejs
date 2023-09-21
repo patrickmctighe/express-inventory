@@ -9,16 +9,17 @@
     <header><%- include("./partials/header") %></header>
 
     <div class="makerContainer">
-        <div class="makerTitle"><h1>Makers List</h1></div>
-      
+      <div class="makerTitle"><h1>Makers List</h1></div>
 
       <div class="makersList">
         <% makers_list.forEach(function(maker){ %>
         <div class="makers">
           <p>
-            <a href="/catalog/maker/<%=maker._id%>"><%= maker.maker_name %></a>
+            <a class="makerListTitle" href="/catalog/maker/<%=maker._id%>"><%= maker.maker_name %></a>
           </p>
-          <a href="/catalog/maker/<%=maker._id%>">  <img class="makerImg" src="<%= maker.maker_image%>" /></a>
+          <a href="/catalog/maker/<%=maker._id%>">
+            <img class="makerImg" src="<%= maker.maker_image%>"
+          /></a>
         </div>
 
         <% }); %>

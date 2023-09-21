@@ -31,7 +31,15 @@
           </div>
         </div>
         <div class="gunDetailImg">
-          <img class="gunsImg" src="<%= gun.gun_image %>" />
+          <% if (gun.gun_image) { %>
+            <% if (gun.gun_image.startsWith('http')) { %>
+              <!-- It's a URL -->
+              <img class="gunsImg" src="<%= gun.gun_image %>" />
+            <% } else { %>
+              <!-- It's a local image path -->
+              <img class="gunsImg" src="<%= '/images/' + gun.gun_image %>" />
+            <% } %>
+        <%}%>
         </div>
       </div>
 

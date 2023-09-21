@@ -46,21 +46,26 @@ exports.guns_list = asyncHandler(async function (req, res) {
     });
 });
 //display detail page for a specific gun
-
 exports.guns_detail = asyncHandler(async function (req, res) {
- const gun = await Gun.findById(req.params.id)
+  const gun = await Gun.findById(req.params.id)
     .populate('gun_maker')
     .populate('gun_type')
     .populate('gun_specs')
     .exec();
+    
   if (gun == null) {
     const err = new Error("Gun not found");
     err.status = 404;
     return next(err);
   }
+  
+  // Assuming gun_image is stored as a Buffer in gun.gun_image
+  const gunImage = gun.gun_image;
+
   res.render("guns_detail", {
     title: "Gun Details",
     gun: gun,
+    gunImage: gunImage, // Pass the gun image data to the template
   });
 });
 
