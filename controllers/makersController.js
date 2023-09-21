@@ -1,15 +1,35 @@
 const Makers = require("../models/maker");
+const Guns = require("../models/gun");
 const asyncHandler = require("express-async-handler");
 
 //display list of all makers
 exports.makers_list = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: makers list");
+  const allMakers = await Makers.find()
+    .sort({ maker_name: 1 })
+    .exec();
+  res.render("makers_list", {
+    title: "Makers List",
+    makers_list: allMakers,
+  });
 });
 
 //display detail page for a specific maker
 
-exports.makers_detail = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: makers detail: " + req.params.id);
+exports.makers_detail = asyncHandler(async (req, res) => {
+ const maker = await Makers.findById(req.params.id).exec();
+
+    if (!maker) {
+      // Handle the case where the maker is not found (e.g., render an error page)
+      return res.status(404).render('error', { message: 'Maker not found' });
+    }
+    const guns = await Guns.find({ gun_maker: req.params.id });
+    // Render the EJS view and pass the maker's data to it
+    res.render('makers_detail', {
+      title: `Maker: ${maker.maker_name}`,
+      maker: maker,
+      guns: guns
+    });
+
 });
 
 //display maker create form on GET

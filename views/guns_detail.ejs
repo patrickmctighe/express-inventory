@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <header><%- include("./partials/header") %></header>
+    <div class="gunDetailContainer">
+      <div class="gunDetailTitle"><p><%= gun.gun_name%></p></div>
+
+      <div class="imgText">
+        <div class="descriptionSpecsInfo">
+          <div class="description"> <p><%= gun.gun_description%></p></div>
+         
+          <div class="specsInfo">
+            <div class="info">
+              <p>Maker: <%= gun.gun_maker.maker_name%></p>
+              <p>Type: <%= gun.gun_type.type_name%></p>
+              <p>Price: <%= gun.gun_price%></p>
+              <p>Stock: <%= gun.gun_stock%></p>
+            </div>
+            <div class="specs">
+              <p>Attack Power: <%= gun.gun_specs.specs_atk_power%></p>
+              <p>Impact Power: <%= gun.gun_specs.specs_impact%></p>
+              <p>Rounds: <%= gun.gun_specs.specs_rounds%></p>
+              <p>Weight: <%= gun.gun_specs.specs_weight%></p>
+              <p>EN: <%= gun.gun_specs.specs_en%></p>
+            </div>
+          </div>
+        </div>
+        <div class="gunDetailImg">
+          <img class="gunsImg" src="<%= gun.gun_image %>" />
+        </div>
+      </div>
+
+      <h3 class="price">COAM <%= gun.gun_price%></h3>
+    </div>
+  </body>
+</html>

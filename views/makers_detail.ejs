@@ -1,0 +1,26 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <header><%- include("./partials/header") %></header>
+  <div class="indexContainer">
+    <h1>Maker: <%= maker.maker_name %></h1>
+    <p>Description: <%= maker.maker_description %></p>
+    <img src="<%= maker.maker_image %>" alt="<%= maker.maker_name %> Image">
+    <ul>
+        <% guns.forEach(function(gun) { %>
+          <li>
+            <img src="<%=gun.gun_image%>" alt="gun">
+            <a href="/catalog/gun/<%= gun._id %>"><%= gun.gun_name %></a>
+
+          </li>
+        <% }); %>
+      </ul>
+  </div>
+</body>
+</html>

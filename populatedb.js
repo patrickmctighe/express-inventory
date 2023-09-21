@@ -242,7 +242,7 @@ async function createMakers() {
       0,
       "ALLMIND",
       "ALLMIND (オールマインド) is a mercenary liaison organization and weapons manufacturer",
-      "https://static.wikia.nocookie.net/armoredcore/images/b/bb/Allmind_Emblem.PNG/revision/latest/scale-to-width-down/180?cb=20230911010702"
+      "./public/images/makers/ALLMIND.png"
     ),
     makerCreate(
       1,
@@ -260,7 +260,7 @@ async function createMakers() {
       3,
       "RaD",
       "Reuse and Development (aka RaD) is a black market arms dealer organization in ARMORED CORE VI FIRES OF RUBICON. They have a reputation for viciousness, and are known for assembling and selling their own heavily customized mechs made from the products of other manufacturers, such as BAWS.",
-      "https://static.wikia.nocookie.net/armoredcore/images/e/e9/Emblem_ACVI_RaD.png/revision/latest/scale-to-width-down/180?cb=20230907121030"
+      "https://static.wikia.nocookie.net/armoredcore/images/e/e9/Emblem_ACVI_RaD.png"
     ),
     makerCreate(
       4,

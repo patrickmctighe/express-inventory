@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+ <header><%- include("./partials/header") %></header>
+ <div class="gunsContainer">
+  <h1>Guns List</h1>
+    <table class="t">
+        <thead>
+        <tr>
+            <th>Gun</th>
+            <th>Maker</th>
+            <th>Type</th>
+            <th>Price</th>
+            <th>Stock</th>
+            
+            <th>Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% guns_list.forEach(function(gun) { %>
+            <tr>
+            <td><%= gun.gun_name %></td>
+            <td><%= gun.gun_maker.maker_name %></td>
+            <td><%= gun.gun_type.type_name%></td>
+            <td><%= gun.gun_price %></td>
+            <td><%= gun.gun_stock %></td>
+          
+           
+            <td>
+                <a href="/catalog/gun/<%= gun._id %>">Details</a>
+                <a href="/catalog/gun/<%= gun._id %>/update">Update</a>
+                <a href="/catalog/gun/<%= gun._id %>/delete">Delete</a>
+            </td>
+            </tr>
+        <% }); %>
+        </tbody>
+ </div>
+
+</body>
+</html>

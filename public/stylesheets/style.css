@@ -1,8 +1,215 @@
-body {
-  padding: 50px;
+html {
+  padding: 10px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image: radial-gradient(rgb(78, 96, 179), rgb(57, 57, 109), navy, rgb(4, 4, 80));
+  background-repeat: no-repeat;
+  background-size:auto;
+  height: 100%;
+  color:rgb(179, 170, 170)
 }
 
-a {
-  color: #00B7FF;
+body{
+  padding: 10px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+ background-color: transparent;
+  height: 100%;
+  color:rgb(179, 170, 170)
+}
+
+
+a{
+  text-decoration: none;
+  color: rgb(202, 199, 199);
+}
+a:hover{
+  color: lightgray;
+
+}
+
+
+
+.typeImg{
+  width:40em;
+  height:28em;
+}
+/*Header*/
+
+.headerImg{
+  padding-left: 2em;
+  height: 3em;
+  width: 15em;
+}
+.headerContainer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+ 
+  font-size: 2.5em;
+ 
+}
+
+.headerLinks{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 20px;
+  gap:2em;
+  text-decoration: none !important;
+  
+}
+/* index Page */
+.indexContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 2em;
+  font-size: 2em;
+  margin-top: 10em;
+}
+
+.counts{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 2em;
+  font-size: 2em;
+}
+/*gun list*/
+
+
+.gunsContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+  
+}
+td, th{
+  text-align: center;
+  border: 1px solid black;
+  padding:.5em;
+  
+}
+th{
+  font-size: 2em;
+}
+td{
+  font-size: 1.5em;
+
+}
+table{
+  
+  width: 80%;
+}
+
+/*gun details*/
+.gunDetailContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+ gap:1.5em
+}
+.gunDetailTitle{
+  font-size: 4em;
+  font-weight: 800;
+  padding-top: 1.5em;
+  padding-bottom: .25em;
+}
+.gunsImg{
+  width:40em;
+  height:30em;
+  padding-bottom: 1.25em;
+}
+.specsInfo{
+  display: flex;
+  align-self: flex-start;
+  gap:2em;
+  font-size: 1.5em;
+  padding-left: 1em;
+}
+.descriptionSpecsInfo{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap:1em;
+  width: 30%;
+}
+.description{
+  width: 90%;
+  font-size: 2em;
+}
+.imgText{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.price{
+  font-size: 3em;
+}
+/*maker list*/
+
+.makerContainer{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 6em;
+  gap:4em;
+}
+.makersList{
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  gap:2.5em;
+}
+
+.makers{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+ width:50%;
+ text-align: center;
+}
+
+/*type list*/
+.typeContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+.types{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap:1.5em;
+  width:25%;
+}
+.typesList{
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  gap:2.5em;
+  font-size: 1.2em;
+}
+.typeName{
+  font-size: 2em;
+}
+.typeImg{
+  width: 16em;
+  height: 12em;
+}
+
+.typesTitle{
+  padding-top: 2em;
+  padding-bottom: 1em;
+  font-size:3em
 }
