@@ -3,7 +3,7 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const multer = require('multer');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 const catalogRouter = require("./routes/catalog");
@@ -18,6 +18,16 @@ main().catch((err) => console.log(err));
 async function main() {
   await mongoose.connect(mongoDB);
 }
+const storage = multer.diskStorage({
+  destination: (req, file, cb) => {
+    cb(null, 'public/images'); // Specify the destination folder
+  },
+  filename: (req, file, cb) => {
+    cb(null, Date.now() + '-' + file.originalname); // Define the filename
+  },
+});
+
+const upload = multer({ storage: storage });
 
 
 // view engine setup
@@ -26,6 +36,7 @@ app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
+
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));

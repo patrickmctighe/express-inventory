@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <header><%- include("./partials/header") %></header>
+ 
+    <h1><%= title %></h1>
+    <div class="makersFormContainer">
+        
+
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="maker_name">maker:</label>
+            <input
+              id="maker_name"
+              class="form-control"
+              type="text"
+              placeholder="AllMind, Omolon, etc."
+              name="maker_name"
+              value="<%= (typeof maker !== 'undefined' ? maker.maker_name : '') %>"
+            />
+            <label for="maker_description">Maker Description:</label>
+            <input
+              id="maker_description"
+              class="form-control"
+              type="text"
+              placeholder="What does this compant make?"
+              name="maker_description"
+              value="<%= (typeof maker !== 'undefined' ? maker.maker_description : '') %>"
+            />
+            <label for="maker_image">Maker Description:</label>
+            <input
+              id="maker_image"
+              class="form-control"
+              type="file"
+              placeholder="Image Url"
+              name="maker_image"
+              accept="image/*"
+              value="<%= (typeof maker !== 'undefined' ? maker.maker_image : '') %>"
+            />
+          </div>
+          <button class="makerFormButton" type="submit">Submit</button>
+        </form>
+        
+        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+          <ul>
+            <% for (let error of errors) { %>
+              <li><%= error.msg %></li>
+            <% } %>
+          </ul>
+        <% } %>
+    </div>
+  </body>
+</html>

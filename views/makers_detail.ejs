@@ -9,44 +9,44 @@
     <header><%- include("./partials/header") %></header>
     <div class="makerDetailContainer">
       <div class="makerDetailImgCont">
+        <% if (maker.maker_image) { %> <% if
+        (maker.maker_image.startsWith('http')) { %>
+        <img class="makerDetailImg" src="<%= maker.maker_image %>" />
+        <% } else { %>
         <img
-          class="makerDetailImg"
-          src="<%= maker.maker_image %>"
-          alt="<%= maker.maker_name %> Image"
+          class="makeDetailImg"
+          src="<%= '/images/' + maker.maker_image %>"
         />
+        <% }} %>
         <div class="makerDetailDescription">
           <p><%= maker.maker_description %></p>
         </div>
       </div>
-<h2>Guns by: <%=maker.maker_name%></h2>
-      
-        
-        <div class="makerDetailGunsList">
-          
-            <% guns.forEach(function(gun) { %>
-              <div class="makerDetailGunListItems">
-            <div class="makerDetailGunImg">
-              <a href="/catalog/gun/<%= gun._id %>">
-                <% if (gun.gun_image) { %> <% if
-                (gun.gun_image.startsWith('http')) { %>
-                <img class="makerGunImg" src="<%= gun.gun_image %>" />
-                <% } else { %>
-                <img
-                  class="makerGunImg"
-                  src="<%= '/images/' + gun.gun_image %>"
-                />
-                <% } %></a
-              >
-              <%}%>
-            </div>
-            <div class="makeDetailGunName">
-              <a href="/catalog/gun/<%= gun._id %>"><%= gun.gun_name %></a>
-            </div>
-</div>
-            <% }); %>
-          
+      <h2>Guns by: <%=maker.maker_name%></h2>
+
+      <div class="makerDetailGunsList">
+        <% guns.forEach(function(gun) { %>
+        <div class="makerDetailGunListItems">
+          <div class="makerDetailGunImg">
+            <a href="/catalog/gun/<%= gun._id %>">
+              <% if (gun.gun_image) { %> <% if
+              (gun.gun_image.startsWith('http')) { %>
+              <img class="makerGunImg" src="<%= gun.gun_image %>" />
+              <% } else { %>
+              <img
+                class="makerGunImg"
+                src="<%= '/images/' + gun.gun_image %>"
+              />
+              <% } %></a
+            >
+            <%}%>
+          </div>
+          <div class="makeDetailGunName">
+            <a href="/catalog/gun/<%= gun._id %>"><%= gun.gun_name %></a>
+          </div>
         </div>
+        <% }); %>
       </div>
-    
+    </div>
   </body>
 </html>

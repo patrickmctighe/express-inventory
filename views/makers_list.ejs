@@ -18,8 +18,15 @@
             <a class="makerListTitle" href="/catalog/maker/<%=maker._id%>"><%= maker.maker_name %></a>
           </p>
           <a href="/catalog/maker/<%=maker._id%>">
-            <img class="makerImg" src="<%= maker.maker_image%>"
-          /></a>
+            <% if (maker.maker_image) { %> <% if
+              (maker.maker_image.startsWith('http')) { %>
+              <img class="makerDetailImg" src="<%= maker.maker_image %>" />
+              <% } else { %>
+              <img
+                class="makeDetailImg"
+                src="<%= '/images/' + maker.maker_image %>"
+              />
+              <% }} %></a>
         </div>
 
         <% }); %>

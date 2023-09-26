@@ -1,3 +1,13 @@
 grassCoder
 BiGJj9e17RtLAbHG
 mongodb+srv://grassCoder:BiGJj9e17RtLAbHG@armored-core-guns.ikav5qs.mongodb.net/armoredCore?retryWrites=true&w=majority
+
+       <% if (maker.maker_image) { %> <% if
+          (maker.maker_image.startsWith('http')) { %>
+          <img class="makerDetailImg" src="<%= maker.maker_image %>" />
+          <% } else { %>
+          <img
+            class="makeDetailImg"
+            src="<%= '././images/makers' + gun.gun_image %>"
+          />
+          <% }} %>

@@ -1,6 +1,22 @@
+
 const Types = require("../models/type");
 const Guns = require("../models/gun");
+const multer = require('multer');
+const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
+
+
+const storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, './public/images/types'); // Specify the destination folder
+  },
+  filename: function (req, file, cb) {
+    // Define the filename (you can customize this)
+    cb(null, Date.now() + '-' + file.originalname);
+  },
+});
+
+const upload = multer({ storage: storage });
 
 // Display list of all types.
 exports.types_list = asyncHandler(async function (req, res) {
@@ -30,13 +46,40 @@ exports.types_detail = asyncHandler(async function (req, res) {
 
 // Display type create form on GET.
 exports.types_create_get = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: types create GET");
+  res.render("types_form", { title: "Create Type" });
 });
 
 // Handle type create on POST.
-exports.types_create_post = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: types create POST");
-});
+exports.types_create_post = [
+  upload.single("type_image"),
+  body("type_name", "Type name required").trim().isLength({ min: 1 }).escape(),
+  body("type_description", "Type description required")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+  asyncHandler(async function (req, res, next) {
+
+    const errors = validationResult(req);
+
+    
+    if (!errors.isEmpty()) {
+      res.render("types_form", {
+        title: "Create Type",
+        type: req.body,
+        errors: errors.array(),
+      });
+      return;
+    } else {
+      const typeExists = await Types.findOne({ type_name: req.body.type_name }).exec();
+      if(typeExists) {
+        res.redirect(typeExists.url);
+      } else {const type = new Types({type_name: req.body.type_name, type_description: req.body.type_description, type_image: "/types/"+req.file.filename});
+        await type.save();
+        res.redirect(type.url);
+      }
+    }
+  }),
+]
 
 // Display type delete form on GET.
 exports.types_delete_get = asyncHandler(async function (req, res) {

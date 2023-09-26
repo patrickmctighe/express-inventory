@@ -1,52 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title><%= title %></title>
-  </head>
-  <body>
-    <header><%- include("./partials/header") %></header>
-    <div class="typeDetailsContainer">
-      <div class="typeDetailTitle"><p><%= type.type_name %></p></div>
-
-      <div class="typeDetailImgCont">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+  <header><%- include("./partials/header") %></header>
+  <div class="typeDetailsContainer">
+    <div class="typeDetailTitle"><p><%= type.type_name %></p></div>
+    
+    <div class="typeDetailImgCont">
+      <% if (type.type_image) { %> <% if
+        (type.type_image.startsWith('http')) { %>
+        <img class="typeDetailImg" src="<%= type.type_image %>" />
+        <% } else { %>
         <img
           class="typeDetailImg"
-          src="<%= type.type_image %>"
-          alt="<%= type.type_name %> Image"
+          src="<%= '/images/' + type.type_image %>"
         />
-        <div class="typeDetailDescription">
-          <p><%= type.type_description %></p>
-        </div>
+        <% }} %>
+   <div class="typeDetailDescription"> 
+     <p> <%= type.type_description %></p></div>
       </div>
       <div class="typeGun"><h2><%=type.type_name%> Guns:</h2></div>
-
-      <div class="typeDetailGunList">
-        <div class="typeDetailGunsList">
-          <% guns.forEach(function(gun) { %>
-          <div class="typeDetailGunListItems">
-            <div class="typeDetailGunImg">
-              <a href="/catalog/gun/<%= gun._id %>">
-                <% if (gun.gun_image) { %> <% if
-                (gun.gun_image.startsWith('http')) { %>
-                <img class="typeGunImg" src="<%= gun.gun_image %>" />
-                <% } else { %>
-                <img
-                  class="typeGunImg"
-                  src="<%= '/images/' + gun.gun_image %>"
-                />
-                <% } %></a
-              >
-              <%}%>
-            </div>
-            <div class="typeDetailGunName">
-              <a href="/catalog/gun/<%= gun._id %>"><%= gun.gun_name %></a>
-            </div>
-          </div>
-          <% }); %>
-        </div>
-      </div>
+      
+ 
+<div class="typeDetailGunList">
+  <div class="typeDetailGunsList">
+          
+    <% guns.forEach(function(gun) { %>
+      <div class="typeDetailGunListItems">
+    <div class="typeDetailGunImg">
+      <a href="/catalog/gun/<%= gun._id %>">
+        <% if (gun.gun_image) { %> <% if
+        (gun.gun_image.startsWith('http')) { %>
+        <img class="typeGunImg" src="<%= gun.gun_image %>" />
+        <% } else { %>
+        <img
+          class="typeGunImg"
+          src="<%= '/images/' + gun.gun_image %>"
+        />
+        <% } %></a
+      >
+      <%}%>
     </div>
-  </body>
+    <div class="typeDetailGunName">
+      <a href="/catalog/gun/<%= gun._id %>"><%= gun.gun_name %></a>
+    </div>
+</div>
+    <% }); %>
+  
+</div>
+</div>
+
+
+  </div>
+</body>
 </html>

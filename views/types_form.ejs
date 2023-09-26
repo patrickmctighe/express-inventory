@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= title %></title>
+  </head>
+  <body>
+    <header><%- include("./partials/header") %></header>
+ 
+    <h1><%= title %></h1>
+    <div class="typeFormContainer">
+        
+
+        <form method="POST" action="" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="type_name">Type:</label>
+            <input
+              id="type_name"
+              class="form-control"
+              type="text"
+              placeholder="Pulse, Plasma, etc."
+              name="type_name"
+              value="<%= (typeof type !== 'undefined' ? type.type_name : '') %>"
+            />
+            <label for="type_description">Type Description:</label>
+            <input
+              id="type_description"
+              class="form-control"
+              type="text"
+              placeholder="What does it do?"
+              name="type_description"
+              value="<%= (typeof type !== 'undefined' ? type.type_description : '') %>"
+            />
+            <label for="type_image">Maker Description:</label>
+            <input
+              id="type_image"
+              class="form-control"
+              type="file"
+              placeholder="Image Url"
+              name="type_image"
+              accept="image/*"
+              value="<%= (typeof type !== 'undefined' ? type.type_image : '') %>"
+            />
+          </div>
+          <button class="typeFormButton" type="submit">Submit</button>
+        </form>
+        
+        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+          <ul>
+            <% for (let error of errors) { %>
+              <li><%= error.msg %></li>
+            <% } %>
+          </ul>
+        <% } %>
+    </div>
+  </body>
+</html>
