@@ -1,0 +1,95 @@
+<!-- guns_form.ejs -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= title %></title>
+</head>
+<body>
+    <header><%- include("./partials/header") %></header>
+ 
+    <h1><%= title %></h1>
+    <form method="POST" action="" enctype="multipart/form-data">
+        <label for="gun_name">Gun Name:</label>
+        <input type="text" id="gun_name" name="gun_name" value="<%= (typeof gun !== 'undefined' ? gun.gun_name : '') %>">
+        <br>
+
+        <label for="gun_type">Gun Type:</label>
+        <select id="gun_type" name="gun_type" >
+            <option value="">Select a Type</option>
+            <% types_list.forEach(function(type) { %>
+                <option value="<%= type._id %>" <%= (typeof gun !== 'undefined' && gun.gun_type.toString() === type._id.toString() ? 'selected' : '') %>><%= type.type_name %></option>
+            <% }); %>
+        </select>
+        <br>
+
+        <label for="gun_description">Gun Description:</label>
+        <textarea id="gun_description" name="gun_description"><%= (typeof gun !== 'undefined' ? gun.gun_description : '') %></textarea>
+        <br>
+
+        <label for="gun_price">Gun Price:</label>
+        <input type="text" id="gun_price" name="gun_price" value="<%= (typeof gun !== 'undefined' ? gun.gun_price : '') %>" >
+        <br>
+
+        <!-- Add other fields as needed -->
+
+        <label for="gun_image">Gun Image:</label>
+        <input type="file" id="gun_image"  accept="image/*" name="gun_image" >
+        <br>
+
+        <label for="gun_stock">Gun Stock:</label>
+        <input type="text" id="gun_stock" name="gun_stock" value="<%= (typeof gun !== 'undefined' ? gun.gun_stock : '') %>" >
+        <br>
+
+        <label for="gun_sold">Gun Sold:</label>
+        <input type="text" id="gun_sold" name="gun_sold" value="<%= (typeof gun !== 'undefined' ? gun.gun_sold : '') %>" >
+        <br>
+
+        <!-- Gun Specs Fields -->
+        <label for="specs_atk_power">Attack Power:</label>
+        <input type="text" id="specs_atk_power" name="specs_atk_power" value="<%= (typeof gun.gun_specs !== 'undefined' ? gun.gun_specs.specs_atk_power : '') %>" >
+        <br>
+
+        <label for="specs_impact">Impact:</label>
+        <input type="text" id="specs_impact" name="specs_impact" value="<%= (typeof gun.gun_specs !== 'undefined' ? gun.gun_specs.specs_impact : '') %>" >
+        <br>
+
+        <label for="specs_rounds">Rounds:</label>
+        <input type="text" id="specs_rounds" name="specs_rounds" value="<%= (typeof gun.gun_specs !== 'undefined' ? gun.gun_specs.specs_rounds : '') %>" >
+        <br>
+
+        <label for="specs_weight">Weight:</label>
+        <input type="text" id="specs_weight" name="specs_weight" value="<%= (typeof gun.gun_specs !== 'undefined' ? gun.gun_specs.specs_weight : '') %>" >
+        <br>
+
+        <label for="specs_en">Energy Consumption:</label>
+        <input type="text" id="specs_en" name="specs_en" value="<%= (typeof gun.gun_specs !== 'undefined' ? gun.gun_specs.specs_en : '') %>" >
+        <br>
+
+        <!-- Maker Selection -->
+        <label for="gun_maker">Gun Maker:</label>
+        <select id="gun_maker" name="gun_maker" >
+            <option value="">Select a Maker</option>
+            <% makers_list.forEach(function(maker) { %>
+                <option value="<%= maker._id %>" <%= (typeof gun !== 'undefined' && gun.gun_maker.toString() === maker._id.toString() ? 'selected' : '') %>><%= maker.maker_name %></option>
+            <% }); %>
+        </select>
+        <br>
+
+        <button type="submit">Submit</button>
+
+       
+    </form>
+
+
+     <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+            <ul>
+              <% for (let error of errors) { %>
+                <li><%= error.msg %></li>
+              <% } %>
+            </ul>
+          <% } %>
+</body>
+</html>
