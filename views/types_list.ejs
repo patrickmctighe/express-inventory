@@ -17,9 +17,16 @@
             <a href="/catalog/type/<%=type._id%>"><%= type.type_name %></a>
           </p>
           <a href="/catalog/type/<%=type._id%>">
-            <img class="typeImg" src="<%= type.type_image%>"
-          /></a>
-          <p><%= type.type_description %></p>
+            <% if (type.type_image) { %> <% if
+        (type.type_image.startsWith('http')) { %>
+        <img class="typeImg" src="<%= type.type_image %>" />
+        <% } else { %>
+        <img
+          class="typeImg"
+          src="<%= '/images/' + type.type_image %>"
+        />
+        <% }} %></a>
+    
         </div>
         <% }); %>
       </div>

@@ -62,6 +62,16 @@ exports.makers_create_post = [
     .isLength({ min: 1 })
     .escape(),
   
+    body("image_source").custom((value, { req }) => {
+      // Set imageSource based on the selected option
+      imageSource = value;
+      if (value === "upload" && !req.file) {
+        throw new Error("Image upload required");
+      } else if (value === "url" && !req.body.maker_image_url) {
+        throw new Error("Image URL required");
+      }
+      return true;
+    }),
 
   asyncHandler(async function (req, res, next) {
     const errors = validationResult(req);
@@ -83,7 +93,9 @@ exports.makers_create_post = [
         const maker = new Makers({
           maker_name: req.body.maker_name,
           maker_description: req.body.maker_description,
-          maker_image: "/makers/"+ req.file.filename, // Set the image filename
+          maker_image: imageSource === "upload"
+          ? `/makers/${req.file.filename}`
+          : req.body.maker_image_url,
         });
         await maker.save();
         res.redirect(maker.url);
@@ -95,23 +107,90 @@ exports.makers_create_post = [
 //display maker delete form on GET
 
 exports.makers_delete_get = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: makers delete GET");
+const maker = await Makers.findById(req.params.id).exec();
+if (maker === null){
+  console.log("maker not found");
+  res.redirect("/catalog/makers");
+}
+res.render("makers_delete", { title: "Delete Maker", maker: maker });
 });
 
 //handle maker delete on POST
 
 exports.makers_delete_post = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: makers delete POST");
+  console.log("Deleting maker:",req.params.id);
+
+try{
+  const maker = await Makers.findByIdAndDelete(req.params.id);
+  console.log("maker deleted:", maker);
+  res.redirect("/catalog/makers");
+} catch (error){
+  console.error("Error deleting maker:", error);
+  res.status(500).send("Error deleting maker");
+}
 });
 
-//display maker update form on GET
-
+// Display maker update form on GET
 exports.makers_update_get = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: makers update GET");
+  const maker = await Makers.findById(req.params.id).exec();
+  if (maker === null) {
+    console.log("Maker not found");
+    res.redirect("/catalog/makers");
+  }
+  res.render("makers_form", { title: "Update Maker", maker: maker });
 });
 
-//handle maker update on POST
+// Handle maker update on POST
+exports.makers_update_post = [
+  // File upload middleware
+  upload.single("maker_image"),
+  // Validation middleware for various fields
+  body("maker_name", "Maker name required").trim().isLength({ min: 1 }).escape(),
+  body("maker_description", "Maker description required").trim().isLength({ min: 1 }).escape(),
+  body("image_source").custom((value, { req }) => {
+    // Set imageSource based on the selected option
+    imageSource = value;
+    if (value === "upload" && !req.file) {
+      throw new Error("Image upload required");
+    } else if (value === "url" && !req.body.maker_image_url) {
+      throw new Error("Image URL required");
+    }
+    return true;
+  }),
 
-exports.makers_update_post = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: makers update POST");
-});
+  asyncHandler(async function (req, res) {
+    // Validate the request and check for errors
+    const errors = validationResult(req);
+
+    // If there are validation errors, re-render the form with error messages
+    if (!errors.isEmpty()) {
+      res.render("makers_form", {
+        title: "Update Maker",
+        maker: req.body,
+        errors: errors.array(),
+      });
+      return;
+    }
+
+    try {
+      // Find the existing maker by ID
+      const existingMaker = await Makers.findById(req.params.id).exec();
+
+      // Update the maker's fields with the new data
+      existingMaker.maker_name = req.body.maker_name;
+      existingMaker.maker_description = req.body.maker_description;
+      existingMaker.maker_image =
+        imageSource === "upload" ? `/makers/${req.file.filename}` : req.body.maker_image_url;
+
+      // Save the updated maker
+      await existingMaker.save();
+
+      // Redirect to the updated maker's URL
+      res.redirect(existingMaker.url);
+    } catch (error) {
+      console.error("Error updating maker:", error);
+      res.status(500).send("Internal Server Error");
+    }
+  }),
+];
+

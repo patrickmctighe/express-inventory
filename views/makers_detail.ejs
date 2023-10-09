@@ -9,7 +9,7 @@
     <header><%- include("./partials/header") %></header>
     <div class="makerDetailContainer">
       <div class="makerDetailImgCont">
-        <% if (maker.maker_image) { %> <% if
+        <div class="imageAndDelete"> <% if (maker.maker_image) { %> <% if
         (maker.maker_image.startsWith('http')) { %>
         <img class="makerDetailImg" src="<%= maker.maker_image %>" />
         <% } else { %>
@@ -18,6 +18,15 @@
           src="<%= '/images/' + maker.maker_image %>"
         />
         <% }} %>
+        <div class="makerDeleteUpdate">
+          <a href="/catalog/maker/<%= maker._id %>/delete">Delete</a>
+          <br>
+          <a href="/catalog/maker/<%= maker._id %>/update">Update</a>
+          </div>
+        
+        
+        </div>
+       
         <div class="makerDetailDescription">
           <p><%= maker.maker_description %></p>
         </div>
@@ -40,6 +49,7 @@
               <% } %></a
             >
             <%}%>
+            
           </div>
           <div class="makeDetailGunName">
             <a href="/catalog/gun/<%= gun._id %>"><%= gun.gun_name %></a>

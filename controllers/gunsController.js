@@ -126,7 +126,7 @@ exports.guns_create_get = asyncHandler(async function (req, res) {
 //handle gun create on POST
 
 exports.guns_create_post = [
-  upload.single("gun_image"),
+  upload.single("gun_image_upload"),
   body("gun_name", "Gun name required").trim().isLength({ min: 1 }).escape(),
   body("gun_type", "Gun type required").trim().isLength({ min: 1 }).escape(),
   body("gun_description", "Gun description required")
@@ -143,7 +143,16 @@ exports.guns_create_post = [
   body("gun_maker", "Gun maker required").trim().isLength({ min: 1 }).escape(),
   body("gun_stock", "Gun stock required").trim().isLength({ min: 1 }).escape(),
   body("gun_sold", "Gun sold required").trim().isLength({ min: 1 }).escape(),
-  
+  body("image_source").custom((value, { req }) => {
+    // Set imageSource based on the selected option
+    imageSource = value;
+    if (value === "upload" && !req.file) {
+      throw new Error("Image upload required");
+    } else if (value === "url" && !req.body.gun_image_url) {
+      throw new Error("Image URL required");
+    }
+    return true;
+  }),
   asyncHandler(async function (req, res, next) {
       const errors = validationResult(req);
 
@@ -162,7 +171,9 @@ exports.guns_create_post = [
         gun_price: req.body.gun_price,
         gun_specs: gunSpecs,
         gun_maker: req.body.gun_maker, // Use the selected maker document
-        gun_image: "/guns/" + req.file.filename,
+        gun_image:  imageSource === "upload"
+        ? `/guns/${req.file.filename}`
+        : req.body.gun_image_url,
         gun_stock: req.body.gun_stock,
         gun_sold: req.body.gun_sold,
       });
@@ -205,24 +216,160 @@ exports.guns_create_post = [
 
 //display gun delete form on GET
 
+// Display gun delete form on GET
 exports.guns_delete_get = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: guns delete GET");
+  const gun = await Gun.findById(req.params.id).exec();
+  if (gun == null) {
+    console.log("gun not found");
+    res.redirect("/catalog/guns");
+  }
+  res.render("gun_delete", {
+    title: "Delete Gun",
+    gun: gun,
+  });
 });
 
-//handle gun delete on POST
-
+// Handle gun delete on POST
+// Handle gun delete on POST
 exports.guns_delete_post = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: guns delete POST");
+  console.log("Deleting gun:", req.params.id);
+
+  try {
+    // Find the gun by ID to get the associated specs
+    const gun = await Gun.findById(req.params.id).exec();
+
+    if (!gun) {
+      console.log("Gun not found");
+      res.redirect("/catalog/guns");
+      return;
+    }
+
+    // Delete the associated specs
+    await Specs.findByIdAndDelete(gun.gun_specs).exec();
+
+    // Delete the gun itself
+    await Gun.findByIdAndDelete(req.params.id).exec();
+
+    console.log("Deleted gun:", gun);
+    res.redirect("/catalog/guns");
+  } catch (error) {
+    console.error("Error deleting gun:", error);
+    // Handle the error appropriately
+    res.status(500).send("Internal Server Error");
+  }
 });
 
-//display gun update form on GET
 
-exports.guns_update_get = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: guns update GET");
+
+
+
+
+// Display gun update form on GET
+exports.guns_update_get = asyncHandler(async function (req, res, next) {
+  // Find the gun by ID and populate related documents
+  const gun = await Gun.findById(req.params.id).populate('gun_type gun_maker').exec();
+
+  // If gun not found, redirect to the gun list
+  if (gun == null) {
+    console.log("Gun not found");
+    res.redirect("/catalog/guns");
+  }
+
+  // Fetch all makers and types for dropdowns
+  const [allMakers, allTypes] = await Promise.all([
+    Makers.find().exec(),
+    Types.find().exec(),
+  ]);
+
+  // Render the gun update form
+  res.render("guns_form", {
+    title: "Update Gun",
+    gun: gun,
+    makers_list: allMakers,
+    types_list: allTypes,
+  });
 });
 
 //handle gun update on POST
 
-exports.guns_update_post = asyncHandler(async function (req, res) {
-  res.send("NOT IMPLEMENTED: guns update POST");
-});
+// Handle gun update on POST
+exports.guns_update_post = [
+  // File upload middleware
+  upload.single("gun_image_upload"),
+  // Validation middleware for various fields
+  body("gun_name", "Gun name required").trim().isLength({ min: 1 }).escape(),
+  body("gun_type", "Gun type required").trim().isLength({ min: 1 }).escape(),
+  body("gun_description", "Gun description required").trim().isLength({ min: 1 }).escape(),
+  body("gun_price", "Gun price required").trim().isLength({ min: 1 }).escape(),
+  body("specs_atk_power", "Attack Power is required").trim().isLength({ min: 1 }).escape(),
+  body("specs_impact", "Impact is required").trim().isLength({ min: 1 }).escape(),
+  body("specs_rounds", "Rounds is required").trim().isLength({ min: 1 }).escape(),
+  body("specs_weight", "Weight is required").trim().isLength({ min: 1 }).escape(),
+  body("specs_en", "Energy Consumption is required").trim().isLength({ min: 1 }).escape(),
+  body("gun_maker", "Gun maker required").trim().isLength({ min: 1 }).escape(),
+  body("gun_stock", "Gun stock required").trim().isLength({ min: 1 }).escape(),
+  body("gun_sold", "Gun sold required").trim().isLength({ min: 1 }).escape(),
+  body("image_source").custom((value, { req }) => {
+    // Set imageSource based on the selected option
+    imageSource = value;
+    if (value === "upload" && !req.file) {
+      throw new Error("Image upload required");
+    } else if (value === "url" && !req.body.gun_image_url) {
+      throw new Error("Image URL required");
+    }
+    return true;
+  }),
+  
+  // Async handler for route logic
+  asyncHandler(async function (req, res, next) {
+    // Validate the request and check for errors
+    const errors = validationResult(req);
+
+    // Create a new Specs document with the provided specs data
+    const gunSpecs = new Specs({
+      specs_atk_power: req.body.specs_atk_power,
+      specs_impact: req.body.specs_impact,
+      specs_rounds: req.body.specs_rounds,
+      specs_weight: req.body.specs_weight,
+      specs_en: req.body.specs_en,
+    });
+
+    // Create a new Gun document with the provided data, including the updated specs
+    const gun = new Gun({
+      _id: req.params.id, // Important: Include the ID of the existing gun
+      gun_name: req.body.gun_name,
+      gun_type: req.body.gun_type, // Use the selected type document
+      gun_description: req.body.gun_description,
+      gun_price: req.body.gun_price,
+      gun_specs: gunSpecs,
+      gun_maker: req.body.gun_maker, // Use the selected maker document
+      gun_image:  imageSource === "upload"
+        ? `/guns/${req.file.filename}`
+        : req.body.gun_image_url,
+      gun_stock: req.body.gun_stock,
+      gun_sold: req.body.gun_sold,
+    });
+
+    // If there are validation errors, render the form with error messages
+    if (!errors.isEmpty()) {
+      const [allMakers, allTypes] = await Promise.all([
+        Makers.find().exec(),
+        Types.find().exec(),
+      ]);
+
+      return res.render("guns_form", {
+        title: "Update Gun",
+        gun: req.body,
+        makers_list: allMakers,
+        types_list: allTypes,
+        errors: errors.array(),
+      });
+    }
+
+    // If there are no errors, save the specs and update the gun document
+    await Promise.all([gunSpecs.save(), Gun.findByIdAndUpdate(req.params.id, gun)]);
+
+    // Redirect to the updated gun's URL
+    res.redirect(gun.url);
+  }),
+];

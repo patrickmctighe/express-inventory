@@ -33,6 +33,20 @@ a:hover {
   width: 40em;
   height: 28em;
 }
+
+.formPass{
+  display:flex;
+  flex-direction: column;
+}
+
+/*delete pages*/
+.deleteForm{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 8em;
+}
 /*Header*/
 
 .headerImg {
@@ -46,7 +60,7 @@ a:hover {
   align-items: center;
   margin-bottom: 20px;
 
-  font-size: 2.5em;
+  font-size: 2em;
 }
 
 .headerLinks {
@@ -146,6 +160,74 @@ table {
 .price {
   font-size: 3em;
 }
+
+/*gun form*/
+input{
+ 
+}
+.gunFormArea{
+  display: flex;
+  justify-content: center;
+ gap:3em
+
+}
+.gunFormLeft{
+  display: flex;
+  justify-content: center;
+  
+  flex-direction: column;
+  gap: .25em;
+  width: 30%;
+}
+.gunFormSpecs{
+  display: flex;
+  justify-content: center;
+  
+  flex-direction: column;
+  gap: .25em;
+ 
+}
+.gunFormName{
+  display:flex;
+  justify-content: center;
+  flex-direction: column;
+  width:40%
+}
+.typeSelect, .makerSelect{
+  display: flex;
+  justify-content: center;
+  
+  flex-direction: column;
+}
+.typeMakerSelect{
+  display: flex;
+ gap: 2em;
+}
+.gunStockSoldPrice{
+  display:flex;
+gap:1em;
+}
+#gun_image_upload{
+  background-color: transparent;
+  border: none;
+  width:12em
+}
+.gunFormTitle{
+  font-size: 3em;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#gun_stock, #gun_sold, #gun_price{
+  width: 7em;
+  
+}
+
+.submitGunForm{
+  margin-top: .5em;
+}
 /*maker list*/
 .makerListTitle{
   font-size: 1em;
@@ -212,6 +294,36 @@ table {
   height: 13em;
 }
 
+.imageAndDelete{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+  flex-direction: column;
+}
+
+/*makers Form */
+.makersFormContainer{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5em;
+}
+.makerCreateTitle{
+  font-size: 3em;
+  padding-top: 1em;
+  
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+#maker_image_upload{
+  background-color: transparent;
+  border: none;
+  width:12em
+}
+
 /*type list*/
 .typeContainer {
   display: flex;
@@ -231,7 +343,7 @@ table {
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  gap: 2.5em;
+  gap: 3.5em;
   font-size: 1.2em;
 }
 .typeName {
@@ -246,6 +358,13 @@ table {
   padding-top: 2em;
   padding-bottom: 1em;
   font-size: 3em;
+}
+.makerDeleteUpdate{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+  
 }
 
 /*type details*/
@@ -297,4 +416,55 @@ table {
 .typeGunImg {
   width: 20em;
   height: 13em;
+}
+.typeImageAndDelete{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1.5em;
+  flex-direction: column;
+}
+/*type form*/
+.typeFormTitle{
+  font-size: 3em;
+  padding-top: 1.5em;
+  padding-bottom: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.typeFormContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 1.5em;
+}
+
+.form-group{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap:1em
+}
+
+.typeNameDescription{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  gap: 1.5em;
+}
+
+.imgInput{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1.5em;
+}
+#type_image_upload{
+  background-color: transparent;
+  border: none;
+  width:12em
 }

@@ -6,52 +6,108 @@
     <title><%= title %></title>
   </head>
   <body>
+   
+      
     <header><%- include("./partials/header") %></header>
- 
-    <h1><%= title %></h1>
+    <div class="typeFormTitle"><h1><%= title %></h1></div>
+
     <div class="typeFormContainer">
-        
-        <form method="POST" action="" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="type_name">Type:</label>
-            <input
-              id="type_name"
-              class="form-control"
-              type="text"
-              placeholder="Pulse, Plasma, etc."
-              name="type_name"
-              value="<%= (typeof type !== 'undefined' ? type.type_name : '') %>"
-            />
-            <label for="type_description">Type Description:</label>
-            <input
-              id="type_description"
-              class="form-control"
-              type="text"
-              placeholder="What does it do?"
-              name="type_description"
-              value="<%= (typeof type !== 'undefined' ? type.type_description : '') %>"
-            />
-            <label for="type_image">Maker Description:</label>
-            <input
-              id="type_image"
-              class="form-control"
-              type="file"
-              placeholder="Image Url"
-              name="type_image"
-              accept="image/*"
-              value="<%= (typeof type !== 'undefined' ? type.type_image : '') %>"
-            />
+      <form method="POST" action="" enctype="multipart/form-data" id="myForm">
+        <div class="form-group">
+          <div class="typeNameDescription">
+            <div class="typeNameCreate">
+              <label for="type_name">Type:</label>
+              <input
+                id="type_name"
+                class="form-control"
+                type="text"
+                placeholder="Pulse, Plasma, etc."
+                name="type_name"
+                value="<%= (typeof type !== 'undefined' ? type.type_name : '') %>"
+              />
+            </div>
+            <div class="typeDescriptionCreate">
+              <label for="type_description">Type Description:</label>
+              <textarea
+                id="type_description"
+                class="form-control"
+                type="text"
+                placeholder="What does it do?"
+                name="type_description"
+                value="<%= (typeof type !== 'undefined' ? type.type_description : '') %>"
+              ></textarea>
+            </div>
           </div>
-          <button class="typeFormButton" type="submit">Submit</button>
-        </form>
+
+          
+
+          <div class="typeCreateImage">
+            <label for="type_image">Type Image:</label>
+            <div class="radio">
+              <input
+                type="radio"
+                id="use_url"
+                name="image_source"
+                value="url"
+              />
+              <label for="use_url">Use URL</label>
+              <input
+                type="radio"
+                id="upload_image"
+                name="image_source"
+                value="upload"
+                checked
+              />
+              <label for="upload_image">Upload Image</label>
+            </div>
+
+            <div class="imgInput">
+              <input
+                id="type_image_upload"
+                class="form-control"
+                type="file"
+                name="type_image"
+                accept="image/*"
+                value="<%= (typeof type !== 'undefined' ? type.type_image : '') %>"
+              />
+              <h4>Or</h4>
+              <input
+                id="type_image_url"
+                class="form-control"
+                type="text"
+                name="type_image_url"
+                placeholder="Image URL"
+                value="<%= (typeof type !== 'undefined' ? type.type_image : '') %>"
+              />
+            </div>
+          </div>
+          <script>
+            document.addEventListener("DOMContentLoaded", function() {
+              document.getElementById("myForm").addEventListener("submit", function(event) {
+                const secretString = "youFoundIt"; // Replace with your actual secret string
+                const userInput = document.getElementById("myInput").value;
+            
+                if (userInput !== secretString) {
+                  alert("Invalid Password.");
+                  event.preventDefault(); // Prevent the form from submitting
+                }
+              });
+            });
+            </script>
+          <label for="myInput">Password:</label>
+          <input type="password" id="myInput" name="secretInput" required>
         
-        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
-          <ul>
-            <% for (let error of errors) { %>
-              <li><%= error.msg %></li>
-            <% } %>
-          </ul>
+          <button class="typeFormButton" type="submit">Submit</button>
+        </div>
+      </form>
+
+      <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+      <ul>
+        <% for (let error of errors) { %>
+        <li><%= error.msg %></li>
         <% } %>
+      </ul>
+      <% } %>
     </div>
   </body>
 </html>

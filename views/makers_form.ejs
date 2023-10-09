@@ -7,52 +7,107 @@
   </head>
   <body>
     <header><%- include("./partials/header") %></header>
- 
-    <h1><%= title %></h1>
-    <div class="makersFormContainer">
-        
 
-        <form method="POST" action="" enctype="multipart/form-data">
-          <div class="form-group">
-            <label for="maker_name">maker:</label>
+    <div class="makersFormContainer">
+      <div class="makerCreateTitle"><h1><%= title %></h1></div>
+
+      <form method="POST" action="" enctype="multipart/form-data" id="myForm">
+        <div class="form-group">
+          <div class="makerFormPart">
+            <label for="maker_name">Maker:</label>
             <input
               id="maker_name"
               class="form-control"
-              type="text"
+              type="textarea"
               placeholder="AllMind, Omolon, etc."
               name="maker_name"
               value="<%= (typeof maker !== 'undefined' ? maker.maker_name : '') %>"
             />
+          </div>
+          <div class="makerFormPart">
             <label for="maker_description">Maker Description:</label>
-            <input
+            <textarea
               id="maker_description"
               class="form-control"
               type="text"
-              placeholder="What does this compant make?"
+              placeholder="What does this company make?"
               name="maker_description"
               value="<%= (typeof maker !== 'undefined' ? maker.maker_description : '') %>"
-            />
-            <label for="maker_image">Maker Description:</label>
-            <input
-              id="maker_image"
-              class="form-control"
-              type="file"
-              placeholder="Image Url"
-              name="maker_image"
-              accept="image/*"
-              value="<%= (typeof maker !== 'undefined' ? maker.maker_image : '') %>"
-            />
+            ></textarea>
           </div>
+          <div class="makerFormPart">
+            <div class="makerCreateImage">
+              <label for="maker_image">Maker Image:</label>
+              <div class="radio">
+                <input
+                  type="radio"
+                  id="use_url"
+                  name="image_source"
+                  value="url"
+                />
+                <label for="use_url">Use URL</label>
+                <input
+                  type="radio"
+                  id="upload_image"
+                  name="image_source"
+                  value="upload"
+                  checked
+                />
+                <label for="upload_image">Upload Image</label>
+              </div>
+
+              <div class="imgInput">
+                <input
+                  id="maker_image_upload"
+                  class="form-control"
+                  type="file"
+                  name="maker_image"
+                  accept="image/*"
+                  value="<%= (typeof maker !== 'undefined' ? maker.maker_image : '') %>"
+                />
+                <h4>Or</h4>
+                <input
+                  id="maker_image_url"
+                  class="form-control"
+                  type="text"
+                  name="maker_image_url"
+                  placeholder="Image URL"
+                  value="<%= (typeof maker !== 'undefined' ? maker.maker_image : '') %>"
+                />
+              </div>
+            </div>
+          </div>
+          <script>
+            document.addEventListener("DOMContentLoaded", function () {
+              document
+                .getElementById("myForm")
+                .addEventListener("submit", function (event) {
+                  const secretString = "youFoundIt"; // Replace with your actual secret string
+                  const userInput = document.getElementById("myInput").value;
+
+                  if (userInput !== secretString) {
+                    alert("Invalid Password.");
+                    event.preventDefault(); // Prevent the form from submitting
+                  }
+                });
+            });
+          </script>
+          <div class="formPass">
+            <label for="myInput">Password:</label>
+            <input type="password" id="myInput" name="secretInput" required />
+          </div>
+
           <button class="makerFormButton" type="submit">Submit</button>
-        </form>
-        
-        <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
-          <ul>
-            <% for (let error of errors) { %>
-              <li><%= error.msg %></li>
-            <% } %>
-          </ul>
+        </div>
+      </form>
+
+      <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+      <ul>
+        <% for (let error of errors) { %>
+        <li><%= error.msg %></li>
         <% } %>
+      </ul>
+      <% } %>
     </div>
   </body>
 </html>
